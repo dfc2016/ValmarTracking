@@ -1,0 +1,45 @@
+{
+  "ProjectName": "Valmar Tracker",
+  "ProjectGuid": "13e5038b-9c95-49ef-9fcf-502f2ccb328f",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.ValmarTracker",
+  "DisplayName": "Valmar Tracker",
+  "Author": "",
+  "Description": "Valmar Tracker",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.7.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{699bf9ff-75c3-4df4-acb5-e39a6f5aa773}",
+  "WP8ProductID": "{8bc8ebe3-62d1-4e29-911b-708f2c85a009}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.ValmarTracker",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
