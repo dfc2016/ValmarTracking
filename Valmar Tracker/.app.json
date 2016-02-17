@@ -4,13 +4,37 @@
     {
       "type": "kendo-ui-mobile:view",
       "name": "home",
-      "components": [],
-      "title": "Home View",
-      "addToNavigation": true,
-      "icon": "home"
+      "components": [
+        {
+          "type": "kendo-ui-mobile:form",
+          "components": [
+            {
+              "type": "kendo-ui-mobile:field",
+              "name": "username",
+              "title": "Nombre",
+              "inputType": "text",
+              "placeholder": "Registra tu nombre"
+            }
+          ],
+          "name": "homeModel",
+          "submitButton": "Confirm",
+          "cancelButton": "Cancel"
+        }
+      ],
+      "title": "Registra tu posicion",
+      "addToNavigation": false
     }
   ],
-  "dataProviders": [],
+  "dataProviders": [
+    {
+      "type": "kendo-ui-mobile:dataProvider",
+      "name": "valmarTracker",
+      "title": "Valmar Tracker / Valmar Tracker",
+      "source": "everlive",
+      "everliveKey": "7kqkt3c8cgm4aw5p",
+      "offlineStorage": true
+    }
+  ],
   "name": "kendoUiMobileApp",
   "navigation": "tabstrip",
   "view": "home",
