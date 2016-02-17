@@ -13,21 +13,51 @@ app.home = kendo.observable({
     var dataProvider = app.data.valmarTracker;
     var homeModel = kendo.observable({
         fields: {
-            username: '',
+            selectedRol: "Vendedor",
+            username: "",
+            isInvisible: false,
         },
-        empezar: function () {            
-            //User has registered his nick name
-            app.mobileApp.navigate('#components/home/listTrackers.html');
+        
+        empezar: function () {
+            console.log(" username >>> " + homeModel.fields.username);
+            console.log(" selectedRol >>> " + homeModel.fields.selectedRol);
+
+            switch (homeModel.fields.username) {
+                case "Marcos":
+                case "Carlos":
+                case "Juan":
+                    console.log(" username >>> OK " + homeModel.fields.username);
+                    switch (homeModel.fields.selectedRol) {
+                        case "Vendedor":
+                            console.log(" Rol >>> Vendedor ");
+                            app.mobileApp.navigate('#components/home/inicioVendedor.html');
+                            break;
+                        case "Supervisor":
+                            console.log(" Rol >>> Supervisor ");
+                            app.mobileApp.navigate('#components/home/inicioSupervisor.html');
+                            break;
+                        default:
+                            console.log(" Rol >>> **KO** no valido");
+                    }
+                    break;
+                default:
+                    console.log(" username >>> **KO** " + homeModel.fields.username);
+                    //var notificationElement = $("#notification");
+                    // notificationElement.kendoNotification();
+                    // var notificationWidget = notificationElement.data("kendoNotification");
+                    // notificationWidget.show("Usuario: no registrado", "error");
+                    // $("#notification").html("Usuario no registrado");
+                    this.set("isInvisible", false);
+            }
         },
-        cancel: function () {}
-    });    
+    });
     parent.set('homeModel', homeModel);
-    
+
     var listTrackersViewModel = kendo.observable({
-        onShow: function(e){
+        onShow: function (e) {
             console.log("listTrackersViewModel >>> onShow");
         },
-        onAfterShow: function(e){
+        onAfterShow: function (e) {
             console.log("listTrackersViewModel >>> onAfterShow");
         }
     });

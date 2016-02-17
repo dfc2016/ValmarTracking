@@ -3,7 +3,24 @@
         <form>
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li>
-                    Elige un nombre para marcar tu posicion en el mapa.
+                    <h3>
+                        Ubica tu posicion
+                    </h3>                    
+                </li>
+                <li>
+                    Ingresa tu nickname al sistema y ubica tu ultima posicion en el mapa y las posiciones anteriores.
+                    Ademas puedes encontrar las posiciones de tus amigos tambien.
+                </li>
+                <li>
+                    Por favor, activar la funcion de GPS antes de empezar.
+                </li>
+                <li>
+                    <label>Rol
+                        <select data-bind="value: homeModel.fields.selectedRol">
+                            <option>Supervisor</option>
+                            <option>Vendedor</option>
+                        </select>
+                    </label>
                 </li>
                 <li>
                     <label>Nombre

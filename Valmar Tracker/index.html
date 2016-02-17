@@ -5,11 +5,21 @@
     <title></title>
     <meta charset="utf-8">
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--DFC Styles Kendo UI to render DataViz Map -->
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.silver.min.css">
+    <!--DFC Styles Kendo UI to render DataViz Map -->
     <link href="styles/main.css" rel="stylesheet">
-
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
+    <!--*** DFC IMPORTANT: Always load bootstrap.min.js __AFTER__ jquery.min.js Bootstrap's JavaScript requires jQuery ***-->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
+    <!--*** DFC IMPORTANT: Always load kendo.all.min.js __AFTER__ kendo.mobile.min.js to avoid conflicts name ***-->
+    <script src="http://kendo.cdn.telerik.com/2016.1.112/js/kendo.all.min.js"></script>
     <script src="app.js"></script>
     <script src="bower_components/everlive/min/everlive.all.min.js"></script>
     <script src="dataProviders/valmarTracker.js"></script>
