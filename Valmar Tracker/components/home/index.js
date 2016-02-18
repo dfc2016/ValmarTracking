@@ -5,12 +5,12 @@ app.home = kendo.observable({
     afterShow: function () {},
     onShowIniSuperVisor: function () {
         console.log(" onShowIniSuperVisor >>> OK");
-        console.log(" LoggedUser >>> "+loggedUser);
+        console.log(" LoggedUser >>> " + loggedUser);
         $("#userSuperVisor").html(loggedUser);
     },
     afterShowIniSuperVisor: function () {
         console.log(" afterShowIniSuperVisor >>> OK");
-    },    
+    },
     afterShowUltimasPosiciones: function () {
         console.log(" afterShowUltimasPosiciones >>> OK");
         $("#mapUltimasPosiciones").kendoMap({
@@ -53,24 +53,66 @@ app.home = kendo.observable({
         layerTarget.setDataSource(dsTarget);
     },
     onShowInicioVendedor: function () {
-       $("#userVendedor").html(loggedUser); 
+        $("#userVendedor").html(loggedUser);
     },
     onShowViewPosVendedor: function () {
-       $("#vendedorPosicion").html(loggedUser); 
+        $("#vendedorPosicion").html(loggedUser);
     },
     afterShowViewPosVendedor: function () {
         console.log(" afterShowViewPosVendedor >>> OK");
-        $("#mapPosVendedor").kendoMap({
-            center: [-12.1061, -77.0371],
-            zoom: 12,
-            layers: [
-                {
-                    type: "tile",
-                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-                    subdomains: ["a", "b", "c"],
-                },
-            ],
-        });
+        navigator.geolocation.getCurrentPosition(
+            onSuccessPosVendedor,
+            onErrorPosVendedor,
+            // DFC 20160208 ALWAYS __TURN_ON__ GPS FX ON MOBILE DEVICE or LOCATION FX ON PC IF EXISTS 
+            // IF PC DOESN'T EXIXST LOCATION FX, THE CHROME SIMULATOR DOESN'T CAPTURE POS (LAT,LNG) 
+            // SO COMMENT OUT THE OPTIONS OF navigator.geolocation.watchPosition(...) BELOW
+            {
+                maximumAge: 3000,
+                timeout: 5000,
+                enableHighAccuracy: true
+            }
+        );
+
+        function onSuccessPosVendedor(position) {
+            
+            var strLabelPosVendedor = "";
+            strLabelPosVendedor = "<b>";
+            strLabelPosVendedor = strLabelPosVendedor + loggedUser;
+            strLabelPosVendedor = strLabelPosVendedor + "</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>";
+            
+            var dsPosVendedor = new kendo.data.DataSource({
+                data: [
+                    {
+                        latlng: [position.coords.latitude, position.coords.longitude],
+                        name: strLabelPosVendedor
+                    },
+                ]
+            });
+
+            $("#mapPosVendedor").kendoMap({
+                center: [position.coords.latitude - 0.005, position.coords.longitude],
+                zoom: 12,
+                layers: [
+                    {
+                        type: "tile",
+                        urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                        subdomains: ["a", "b", "c"],
+                    },
+                    {
+                        //Layer for current position of Vendedor
+                        type: "marker",
+                        dataSource: dsPosVendedor,
+                        locationField: "latlng",
+                        titleField: "name",
+                        shape: "pinTarget",
+                    },
+                ],
+            });
+        }
+
+        function onErrorPosVendedor(error) {
+            console.log("onErrorPosVendedor >>> " + error.code);
+        }
 
     },
 });
@@ -81,7 +123,7 @@ app.home = kendo.observable({
 // END_CUSTOM_CODE_home
 (function (parent) {
     var dataProvider = app.data.valmarTracker;
-    
+
     var homeModel = kendo.observable({
         fields: {
             selectedRol: "Vendedor",
@@ -121,31 +163,31 @@ app.home = kendo.observable({
         },
 
         limpiar: function () {
-        	this.set("homeModel.fields.isVisible", false);
-        	this.set("homeModel.fields.username", "");
+            this.set("homeModel.fields.isVisible", false);
+            this.set("homeModel.fields.username", "");
             this.set("homeModel.fields.selectedRol", "Vendedor");
         },
     });
     parent.set('homeModel', homeModel);
-    
+
     var inicioSupervisorModel = kendo.observable({
         fields: {
             loggedUser: loggedUser,
         },
-        
+
         ultimaPosColaboradores: function (e) {
             console.log("click >>> ultimaPosColaboradores");
             app.mobileApp.navigate('#components/home/viewUltimasPosiciones.html');
         },
-        
+
         terminar: function (e) {
             console.log("inicioSupervisorModel >>> click >>> terminar");
             app.mobileApp.navigate('#components/home/view.html');
         },
-        
+
     });
     parent.set('inicioSupervisorModel', inicioSupervisorModel);
-    
+
     var viewUltimasPosiciones = kendo.observable({
         inicioSuperVisor: function (e) {
             console.log("viewUltimasPosiciones >>> click >>> terminar");
@@ -154,10 +196,10 @@ app.home = kendo.observable({
         terminar: function (e) {
             console.log("viewUltimasPosiciones >>> click >>> terminar");
             app.mobileApp.navigate('#components/home/view.html');
-        },        
+        },
     });
     parent.set('viewUltimasPosiciones', viewUltimasPosiciones);
-    
+
     var inicioVendedorModel = kendo.observable({
         nuevaPosVendedor: function (e) {
             app.mobileApp.navigate('#components/home/viewPosVendedor.html');
@@ -167,14 +209,14 @@ app.home = kendo.observable({
         },
     });
     parent.set('inicioVendedorModel', inicioVendedorModel);
-    
+
     var viewPosVendedor = kendo.observable({
         inicioVendedor: function (e) {
             app.mobileApp.navigate('#components/home/inicioVendedor.html');
         },
         terminar: function (e) {
             app.mobileApp.navigate('#components/home/view.html');
-        },        
+        },
     });
     parent.set('viewPosVendedor', viewPosVendedor);
 
