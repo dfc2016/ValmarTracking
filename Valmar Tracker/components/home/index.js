@@ -88,10 +88,26 @@ app.home = kendo.observable({
                     },
                 ]
             });
+            
+            var dsPosRecientesVendedor = null;
+            
+            switch (loggedUser) {
+                case "Marcos":
+                    dsPosRecientesVendedor = dsPosRecientesMarcos;
+                    break;
+                case "Carlos":
+                    dsPosRecientesVendedor = dsPosRecientesCarlos;
+                    break;
+                case "Juan":
+                    dsPosRecientesVendedor = dsPosRecientesJuan;
+                    break;
+                default:
+            }
+
 
             $("#mapPosVendedor").kendoMap({
                 center: [position.coords.latitude - 0.005, position.coords.longitude],
-                zoom: 12,
+                zoom: 11,
                 layers: [
                     {
                         type: "tile",
@@ -105,6 +121,14 @@ app.home = kendo.observable({
                         locationField: "latlng",
                         titleField: "name",
                         shape: "pinTarget",
+                    },
+                    {
+                        //Layer for current position of Vendedor
+                        type: "marker",
+                        dataSource: dsPosRecientesVendedor,
+                        locationField: "latlng",
+                        titleField: "name",
+                        shape: "pin",
                     },
                 ],
             });
@@ -225,4 +249,57 @@ app.home = kendo.observable({
 // START_CUSTOM_CODE_homeModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 var loggedUser = "";
+
+var dsPosRecientesCarlos = new kendo.data.DataSource({
+    data: [
+        {
+            latlng: [-12.0767,-77.0210],
+            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-12.0952,-76.9985],
+            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-11.9947,-77.0546],
+            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+    ]
+});
+
+var dsPosRecientesMarcos = new kendo.data.DataSource({
+    data: [
+        {
+            latlng: [-12.0704,-77.0934],
+            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-12.0225,-77.1085],
+            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-11.9740,-77.0880],
+            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+    ]
+});
+
+var dsPosRecientesJuan = new kendo.data.DataSource({
+    data: [
+        {
+            latlng: [-12.1061, -77.0371],
+            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-12.1010, -77.0599],
+            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+        {
+            latlng: [-12.0710, -77.0799],
+            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+        },
+    ]
+});
+
+
 // END_CUSTOM_CODE_homeModel
