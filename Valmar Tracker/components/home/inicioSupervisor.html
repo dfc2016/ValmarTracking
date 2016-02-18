@@ -1,4 +1,25 @@
-<div data-role="view" data-model="app.home.inicioSupervisor">
-    <div>Inicio Supervisor...</div>
-    <a data-role="backbutton" data-align="left">Regresar</a>
+<div data-role="view" data-model="app.home" data-show="app.home.onShowIniSuperVisor" data-after-show="app.home.afterShowIniSuperVisor">
+    <div id="inicioSupervisorModel">
+        <h2>
+            Bienvenido
+            <label id="userSuperVisor"></label>
+        </h2>
+        <h3>
+            Tu rol es
+            <label>SUPERVISOR</label>
+        </h3>
+        <h3>
+            Opciones
+        </h3>
+        <div class="container-fluid">
+            <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                <button type="button" class="btn btn-sm btn-success" data-bind="events: { click: inicioSupervisorModel.ultimaPosColaboradores }">
+                    Ulimas posiciones colaboradores
+                </button>
+                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: inicioSupervisorModel.terminar }">
+                    Terminar
+                </button>
+            </div>
+        </div>               
+    </div>
 </div>

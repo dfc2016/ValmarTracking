@@ -28,10 +28,22 @@
                     </label>
                 </li>
             </ul>
-
-            <div class="button-group">
-                <a class="primary" data-role="button" data-bind="events: { click: homeModel.empezar }">Confirm</a>
+            
+            <div class="container-fluid"  style="margin-bottom:5px;" data-bind="visible: homeModel.fields.isVisible">
+                <div id="UsrNoRegistrado" style="color:blue;"></div>
             </div>
+            
+            <div class="container-fluid">
+                <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                    <button type="button" class="btn btn-sm btn-success" data-bind="events: { click: homeModel.empezar }">
+                        Empezar
+                    </button>
+                    <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: homeModel.limpiar }">
+                        Limpiar
+                    </button>
+                </div>
+            </div>               
+            
         </form>
         <!-- START_CUSTOM_CODE_homeModel -->
         <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
@@ -39,13 +51,6 @@
         <!-- END_CUSTOM_CODE_homeModel -->
     </div>
     
-    <ul>
-        <li>
-            <div id="UsrNoRegistrado" data-bind="visible: homeModel.fields.isVisible">
-                
-            </div>
-        </li>
-    </ul>
 
     <!-- START_CUSTOM_CODE_home -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
