@@ -15,7 +15,7 @@ app.home = kendo.observable({
         fields: {
             selectedRol: "Vendedor",
             username: "",
-            isInvisible: false,
+            isVisible: false,
         },
         
         empezar: function () {
@@ -42,12 +42,8 @@ app.home = kendo.observable({
                     break;
                 default:
                     console.log(" username >>> **KO** " + homeModel.fields.username);
-                    //var notificationElement = $("#notification");
-                    // notificationElement.kendoNotification();
-                    // var notificationWidget = notificationElement.data("kendoNotification");
-                    // notificationWidget.show("Usuario: no registrado", "error");
-                    // $("#notification").html("Usuario no registrado");
-                    this.set("isInvisible", false);
+                    this.set("homeModel.fields.isVisible", true);
+                    $("#UsrNoRegistrado").html("Usuario: "+homeModel.fields.username+" no registrado");
             }
         },
     });
