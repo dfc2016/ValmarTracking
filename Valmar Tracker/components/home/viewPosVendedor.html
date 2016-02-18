@@ -1,0 +1,18 @@
+<div data-role="view" data-model="app.home" data-show="app.home.onShowViewPosVendedor">
+    <div id="viewPosVendedor">
+        <h3>
+            <label id="vendedorPosicion"></label>, tu nueva posicion se registro exitosamente
+        </h3>
+
+        <div class="container-fluid">
+            <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                <button type="button" class="btn btn-sm btn-success" style="margin-top:5px;" data-bind="events: { click: viewPosVendedor.inicioVendedor }">
+                    Volver a inicio
+                </button>
+                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: viewPosVendedor.terminar }">
+                    Terminar
+                </button>
+            </div>
+        </div>               
+    </div>
+</div>

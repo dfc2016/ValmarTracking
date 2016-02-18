@@ -1,4 +1,32 @@
-<div data-role="view" data-model="app.home.inicioVendedor">
-    <div>Inicio Vendedor...</div>
-    <a data-role="backbutton" data-align="left">Regresar</a>
+<div data-role="view" data-model="app.home" data-show="app.home.onShowInicioVendedor">
+    <div id="inicioVendedorModel">
+        <h2>
+            Bienvenido
+            <label id="userVendedor"></label>
+        </h2>
+        <h3>
+            Tu rol es
+            <label>VEDEDOR</label>
+        </h3>
+        <h3>
+            Recorridos vendedores
+        </h3>
+        <ul class="list-group">
+            <li class="list-group-item">Vendedor 1</li>
+            <li class="list-group-item">Vendedor 2</li>
+        </ul>
+        <h3>
+            Opciones
+        </h3>
+        <div class="container-fluid">
+            <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                <button type="button" class="btn btn-sm btn-success" data-bind="events: { click: inicioVendedorModel.nuevaPosVendedor }">
+                    Marca tu posicion
+                </button>
+                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: inicioVendedorModel.terminar }">
+                    Terminar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

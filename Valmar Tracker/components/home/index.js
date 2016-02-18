@@ -52,6 +52,12 @@ app.home = kendo.observable({
         var layerTarget = map.layers[1];
         layerTarget.setDataSource(dsTarget);
     },
+    onShowInicioVendedor: function () {
+       $("#userVendedor").html(loggedUser); 
+    },
+    onShowViewPosVendedor: function () {
+       $("#vendedorPosicion").html(loggedUser); 
+    },
 });
 
 // START_CUSTOM_CODE_home
@@ -90,17 +96,19 @@ app.home = kendo.observable({
                         default:
                             console.log(" Rol >>> **KO** no valido");
                     }
+                    this.set("homeModel.fields.isVisible", false);
                     break;
                 default:
                     console.log(" username >>> **KO** " + homeModel.fields.username);
                     this.set("homeModel.fields.isVisible", true);
-                    $("#UsrNoRegistrado").html("Usuario: " + homeModel.fields.username + " no registrado");
+                    $("#UsrNoRegistrado").html("Usuario " + homeModel.fields.username + " no registrado");
             }
         },
 
         limpiar: function () {
         	this.set("homeModel.fields.isVisible", false);
         	this.set("homeModel.fields.username", "");
+            this.set("homeModel.fields.selectedRol", "Vendedor");
         },
     });
     parent.set('homeModel', homeModel);
@@ -124,22 +132,37 @@ app.home = kendo.observable({
     parent.set('inicioSupervisorModel', inicioSupervisorModel);
     
     var viewUltimasPosiciones = kendo.observable({
+        inicioSuperVisor: function (e) {
+            console.log("viewUltimasPosiciones >>> click >>> terminar");
+            app.mobileApp.navigate('#components/home/inicioSupervisor.html');
+        },
         terminar: function (e) {
             console.log("viewUltimasPosiciones >>> click >>> terminar");
             app.mobileApp.navigate('#components/home/view.html');
         },        
     });
     parent.set('viewUltimasPosiciones', viewUltimasPosiciones);
-
-    var listTrackersViewModel = kendo.observable({
-        onShow: function (e) {
-            console.log("listTrackersViewModel >>> onShow");
+    
+    var inicioVendedorModel = kendo.observable({
+        nuevaPosVendedor: function (e) {
+            app.mobileApp.navigate('#components/home/viewPosVendedor.html');
         },
-        onAfterShow: function (e) {
-            console.log("listTrackersViewModel >>> onAfterShow");
-        }
+        terminar: function (e) {
+            app.mobileApp.navigate('#components/home/view.html');
+        },
     });
-    parent.set('listTrackersViewModel', listTrackersViewModel);
+    parent.set('inicioVendedorModel', inicioVendedorModel);
+    
+    var viewPosVendedor = kendo.observable({
+        inicioVendedor: function (e) {
+            app.mobileApp.navigate('#components/home/inicioVendedor.html');
+        },
+        terminar: function (e) {
+            app.mobileApp.navigate('#components/home/view.html');
+        },        
+    });
+    parent.set('viewPosVendedor', viewPosVendedor);
+
 })(app.home);
 
 // START_CUSTOM_CODE_homeModel

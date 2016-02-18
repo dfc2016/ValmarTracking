@@ -1,17 +1,17 @@
 <div data-role="view" data-model="app.home" data-after-show="app.home.afterShowUltimasPosiciones">
     <div id="viewUltimasPosiciones">
         <h3>
-            Las ultimas posiciones de los vendedores
+            Las ultimas posiciones del grupo de vendedores
         </h3>
 
         <div id="mapUltimasPosiciones" style="width:100%;height:300px;"> </div>
 
         <div class="container-fluid">
-            <div class="btn-group-vertical btn-group-lg" style="width:100%;" style="margin-top:5px;">
-                <button type="button" class="btn btn-sm btn-success">
-                    Opcion principal
+            <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                <button type="button" class="btn btn-sm btn-success" style="margin-top:5px;" data-bind="events: { click: viewUltimasPosiciones.inicioSuperVisor }">
+                    Volver a inicio
                 </button>
-                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: viewUltimasPosiciones.terminar }" >
+                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: viewUltimasPosiciones.terminar }">
                     Terminar
                 </button>
             </div>
