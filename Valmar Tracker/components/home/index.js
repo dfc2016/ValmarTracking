@@ -58,6 +58,21 @@ app.home = kendo.observable({
     onShowViewPosVendedor: function () {
        $("#vendedorPosicion").html(loggedUser); 
     },
+    afterShowViewPosVendedor: function () {
+        console.log(" afterShowViewPosVendedor >>> OK");
+        $("#mapPosVendedor").kendoMap({
+            center: [-12.1061, -77.0371],
+            zoom: 12,
+            layers: [
+                {
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                },
+            ],
+        });
+
+    },
 });
 
 // START_CUSTOM_CODE_home

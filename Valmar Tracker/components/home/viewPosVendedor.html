@@ -1,8 +1,10 @@
-<div data-role="view" data-model="app.home" data-show="app.home.onShowViewPosVendedor">
+<div data-role="view" data-model="app.home" data-show="app.home.onShowViewPosVendedor" data-after-show="app.home.afterShowViewPosVendedor">
     <div id="viewPosVendedor">
         <h3>
             <label id="vendedorPosicion"></label>, tu nueva posicion se registro exitosamente
         </h3>
+        
+        <div id="mapPosVendedor" style="width:100%;height:300px;"> </div>
 
         <div class="container-fluid">
             <div class="btn-group-vertical btn-group-lg" style="width:100%;">
