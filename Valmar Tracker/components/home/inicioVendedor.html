@@ -1,4 +1,4 @@
-<div data-role="view" data-model="app.home" data-show="app.home.onShowInicioVendedor">
+<div data-role="view" data-model="app.home" data-before-show="app.home.beforeShowInicioVendedor"  data-show="app.home.onShowInicioVendedor" data-after-show="app.home.afterShowInicioVendedor">
     <div id="inicioVendedorModel">
         <h2>
             Bienvenido
@@ -11,10 +11,26 @@
         <h3>
             Recorridos vendedores
         </h3>
+
         <ul class="list-group">
-            <li class="list-group-item">Vendedor 1</li>
-            <li class="list-group-item">Vendedor 2</li>
+            <li class="list-group-item" data-role="listview" data-source="dsVendedores" data-auto-bind="true" data-template="vendedores-template">
+            </li>
         </ul>
+
+        <script type="text/x-kendo-template" id="vendedores-template">    	
+                #: data.name #		
+        </script>
+
+        <script>
+            var dsVendedores = new kendo.data.DataSource({
+                data: [
+                    { name: "Carlos"},
+                    { name: "Juan"},
+                    { name: "Marcos"},
+                ],
+            }); 
+        </script>
+
         <h3>
             Opciones
         </h3>

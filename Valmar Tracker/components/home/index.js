@@ -52,8 +52,15 @@ app.home = kendo.observable({
         var layerTarget = map.layers[1];
         layerTarget.setDataSource(dsTarget);
     },
+    beforeShowInicioVendedor:function () {
+        dsVendedores.filter( { field: "name", operator: "neq", value: loggedUser });
+        console.log("beforeShowInicioVendedor >>> OK");
+    },
     onShowInicioVendedor: function () {
         $("#userVendedor").html(loggedUser);
+    },
+    afterShowInicioVendedor:function () {
+        console.log("afterShowInicioVendedor >>> OK");
     },
     onShowViewPosVendedor: function () {
         $("#vendedorPosicion").html(loggedUser);
@@ -322,5 +329,14 @@ function msgWaitPosVendedor(){
     
     $("#mapPosVendedor").html(strHTML);
 }
+
+// var vendedores = new kendo.data.DataSource({
+//     data: [
+//         { name: "Carlos"},
+//         { name: "Juan"},
+//         { name: "Marcos"},
+//     ],
+//     filter: { field: "name", operator: "neq", value: loggedUser }
+// });
 
 // END_CUSTOM_CODE_homeModel
