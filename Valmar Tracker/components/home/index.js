@@ -52,14 +52,18 @@ app.home = kendo.observable({
         var layerTarget = map.layers[1];
         layerTarget.setDataSource(dsTarget);
     },
-    beforeShowInicioVendedor:function () {
-        dsVendedores.filter( { field: "name", operator: "neq", value: loggedUser });
+    beforeShowInicioVendedor: function () {
+        dsVendedores.filter({
+            field: "name",
+            operator: "neq",
+            value: loggedUser
+        });
         console.log("beforeShowInicioVendedor >>> OK");
     },
     onShowInicioVendedor: function () {
         $("#userVendedor").html(loggedUser);
     },
-    afterShowInicioVendedor:function () {
+    afterShowInicioVendedor: function () {
         console.log("afterShowInicioVendedor >>> OK");
     },
     onShowViewPosVendedor: function () {
@@ -81,12 +85,12 @@ app.home = kendo.observable({
         );
 
         function onSuccessPosVendedor(position) {
-            
+
             var strLabelPosVendedor = "";
             strLabelPosVendedor = "<b>";
             strLabelPosVendedor = strLabelPosVendedor + loggedUser;
             strLabelPosVendedor = strLabelPosVendedor + "</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>";
-            
+
             var dsPosVendedor = new kendo.data.DataSource({
                 data: [
                     {
@@ -95,9 +99,9 @@ app.home = kendo.observable({
                     },
                 ]
             });
-            
+
             var dsPosRecientesVendedor = null;
-            
+
             switch (loggedUser) {
                 case "Marcos":
                     dsPosRecientesVendedor = dsPosRecientesMarcos;
@@ -171,6 +175,11 @@ app.home = kendo.observable({
         empezar: function () {
             // console.log(" username >>> " + homeModel.fields.username);
             // console.log(" selectedRol >>> " + homeModel.fields.selectedRol);
+            // Clean up starting and ending white spaces
+            this.set(
+                'homeModel.fields.username',
+                homeModel.fields.username.trim()
+            );
 
             switch (homeModel.fields.username) {
                 case "Marcos":
@@ -266,15 +275,15 @@ var loggedUser = "";
 var dsPosRecientesCarlos = new kendo.data.DataSource({
     data: [
         {
-            latlng: [-12.0767,-77.0210],
+            latlng: [-12.0767, -77.0210],
             name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
         {
-            latlng: [-12.0952,-76.9985],
+            latlng: [-12.0952, -76.9985],
             name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
         {
-            latlng: [-11.9947,-77.0546],
+            latlng: [-11.9947, -77.0546],
             name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
     ]
@@ -283,16 +292,20 @@ var dsPosRecientesCarlos = new kendo.data.DataSource({
 var dsPosRecientesMarcos = new kendo.data.DataSource({
     data: [
         {
-            latlng: [-12.0704,-77.0934],
-            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-12.0704, -77.0934],
+            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>09:20:07</b>"
         },
         {
-            latlng: [-12.0225,-77.1085],
-            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-12.0225, -77.1085],
+            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>10:34:02</b>"
         },
         {
-            latlng: [-11.9740,-77.0880],
-            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-11.9740, -77.0880],
+            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>12:20:37</b>"
+        },
+        {
+            latlng: [-12.0915,-77.0209],
+            name: "Pos:<b>4</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
     ]
 });
@@ -300,23 +313,32 @@ var dsPosRecientesMarcos = new kendo.data.DataSource({
 var dsPosRecientesJuan = new kendo.data.DataSource({
     data: [
         {
-            latlng: [-12.0753,-76.9116],
-            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-12.0753, -76.9116],
+            name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>09:20:07</b>"
         },
         {
-            latlng: [-12.1190,-77.0285],
-            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-12.1190, -77.0285],
+            name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>11:25:15</b>"
         },
         {
-            latlng: [-12.1849,-77.0279],
-            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
+            latlng: [-12.1849, -77.0279],
+            name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:27:00</b>"
         },
+        {
+            latlng: [-12.0698,-77.0426],
+            name: "Pos:<b>4</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>16:40:31</b>"
+        },
+        {
+            latlng: [-12.0833,-77.0542],
+            name: "Pos:<b>5</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>17:20:07</b>"
+        },
+
     ]
 });
 
-function msgWaitPosVendedor(){
-	var strHTML = "<div class=\"container-fluid\">";
-        
+function msgWaitPosVendedor() {
+    var strHTML = "<div class=\"container-fluid\">";
+
     strHTML += "<div class=\"row\">";
     strHTML += "<div class=\"col-xs-12\">";
     strHTML += "<h3>";
@@ -324,19 +346,10 @@ function msgWaitPosVendedor(){
     strHTML += "</h3>";
     strHTML += "</div>";
     strHTML += "</div>";
-    
+
     strHTML += "</div>";
-    
+
     $("#mapPosVendedor").html(strHTML);
 }
-
-// var vendedores = new kendo.data.DataSource({
-//     data: [
-//         { name: "Carlos"},
-//         { name: "Juan"},
-//         { name: "Marcos"},
-//     ],
-//     filter: { field: "name", operator: "neq", value: loggedUser }
-// });
 
 // END_CUSTOM_CODE_homeModel
