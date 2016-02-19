@@ -181,5 +181,25 @@
 
 /* Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes */
 
+.roles {
+    color: #7ABBFF;
+    border-style: solid;
+    border-radius: 25px;
+}
+
+.roles-label {
+    margin-top: 9px;
+    margin-left: 5px;
+}
+
+
+.input-nombre {
+    border-style: solid;
+}
+
+.label-nombre {
+    margin-top: 7px;
+    margin-left: 7px;
+}
 
 /* END_CUSTOM_CODE_kendoUiMobileApp */

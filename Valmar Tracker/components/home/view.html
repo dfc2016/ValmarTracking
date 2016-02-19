@@ -3,29 +3,41 @@
         <form>
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li>
-                    <h3>
-                        Ubica tu posicion
-                    </h3>                    
+                    <h4>
+                        <b>
+                        Supervisor y Vendedores
+                        </b>
+                    </h4>                    
                 </li>
                 <li>
-                    Ingresa tu nickname al sistema y ubica tu ultima posicion en el mapa y las posiciones anteriores.
-                    Ademas puedes encontrar las posiciones de tus amigos tambien.
+                    Selecciona un rol entre <b>Vendedor</b> y <b>Supervisor</b> luego tipea tu nombre.
+                    <br>La app tiene registrado 3 usuarios: <b>Carlos, Juan y Marcos</b>
+                    Ubica tu posicion y las posiciones registradas anteriormente.
+                    <br><b>Por favor, activar siempre la funcion de GPS antes de empezar.</b>
                 </li>
                 <li>
-                    Por favor, activar la funcion de GPS antes de empezar.
-                </li>
-                <li>
-                    <label>Seleccionar Rol
+                    <div class="roles">
+                        
+                        <label class="roles-label">
+                            Seleccionar Rol >> 
+                        </label>                   
+
                         <select data-bind="value: homeModel.fields.selectedRol">
-                            <option>Supervisor</option>
-                            <option>Vendedor</option>
+                            <option>
+                                Supervisor
+                            </option>
+                            <option>
+                                Vendedor
+                            </option>
                         </select>
-                    </label>
+                        
+                    </div>                    
                 </li>
                 <li>
-                    <label>Nombre
+                    <div class="input-nombre">
+                        <label class="label-nombre">Nombre:</label>
                         <input data-bind="value: homeModel.fields.username" placeholder="Tu nombre" type="text">
-                    </label>
+                    </div>
                 </li>
             </ul>
             
