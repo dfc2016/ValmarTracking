@@ -139,6 +139,12 @@ app.home = kendo.observable({
         }
 
     },
+    beforeShowViewPosVendedor: function () {
+        msgWaitPosVendedor();
+    },
+    onHideViewPosVendedor: function () {
+        msgWaitPosVendedor();
+    },
 });
 
 // START_CUSTOM_CODE_home
@@ -287,19 +293,34 @@ var dsPosRecientesMarcos = new kendo.data.DataSource({
 var dsPosRecientesJuan = new kendo.data.DataSource({
     data: [
         {
-            latlng: [-12.1061, -77.0371],
+            latlng: [-12.0753,-76.9116],
             name: "Pos:<b>1</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
         {
-            latlng: [-12.1010, -77.0599],
+            latlng: [-12.1190,-77.0285],
             name: "Pos:<b>2</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
         {
-            latlng: [-12.0710, -77.0799],
+            latlng: [-12.1849,-77.0279],
             name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
     ]
 });
 
+function msgWaitPosVendedor(){
+	var strHTML = "<div class=\"container-fluid\">";
+        
+    strHTML += "<div class=\"row\">";
+    strHTML += "<div class=\"col-xs-12\">";
+    strHTML += "<h3>";
+    strHTML += "Por favor espsera un momento estamos ubicando su posicion...";
+    strHTML += "</h3>";
+    strHTML += "</div>";
+    strHTML += "</div>";
+    
+    strHTML += "</div>";
+    
+    $("#mapPosVendedor").html(strHTML);
+}
 
 // END_CUSTOM_CODE_homeModel
