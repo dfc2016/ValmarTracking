@@ -342,7 +342,7 @@ function msgWaitPosVendedor() {
     strHTML += "<div class=\"row\">";
     strHTML += "<div class=\"col-xs-12\">";
     strHTML += "<h3>";
-    strHTML += "Por favor espsera un momento estamos ubicando su posicion...";
+    strHTML += "Por favor espsera un momento estamos ubicando tu posicion...";
     strHTML += "</h3>";
     strHTML += "</div>";
     strHTML += "</div>";
