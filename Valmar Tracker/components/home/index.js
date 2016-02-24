@@ -10,6 +10,33 @@ app.home = kendo.observable({
     },
     afterShowIniSuperVisor: function () {
         console.log(" afterShowIniSuperVisor >>> OK");
+        // 20160224 TEST Expand Expression Data BS
+        // var expandExp = {
+        //     "Positions": {
+        //         "Positions.Tracker": true
+        //     }
+        // };
+
+        var expandExp = {
+            "Locations": {
+                "TargetTypeName": "Positions"
+            }
+        };
+        var queryBS = new Everlive.Query();
+        queryBS.expand(expandExp);
+        queryBS.where().eq("Username", loggedUser);
+        TrackersBS.get(queryBS).then(
+            function (data) {
+                console.log("Query BS Expanded SUCCES user >>> " + loggedUser);
+                // console.log(JSON.stringify(data));
+                console.log("Expanded data POS 1 >>> "+JSON.stringify(data.result[0].Locations[0].Pos));
+                console.log("Expanded data POS 2 >>> "+JSON.stringify(data.result[0].Locations[1].Pos));
+            },
+            function (error) {
+                console.log("Query BS Expanded ERROR user >>> " + loggedUser);
+                console.log(JSON.stringify(error));
+            }
+        );
     },
     afterShowUltimasPosiciones: function () {
         console.log(" afterShowUltimasPosiciones >>> OK");
@@ -156,6 +183,11 @@ app.home = kendo.observable({
     onHideViewPosVendedor: function () {
         msgWaitPosVendedor();
     },
+    onShowRegUsuario: function () {
+        console.log(" onShowRegUsuario >>> OK");
+        console.log(" New User >>> " + newUser);
+        $("#nuevoUsuario").html(newUser);
+    },
 });
 
 // START_CUSTOM_CODE_home
@@ -167,7 +199,7 @@ app.home = kendo.observable({
 
     var homeModel = kendo.observable({
         fields: {
-            selectedRol: "Vendedor",
+            // selectedRol: "Vendedor",
             username: "",
             isVisible: false,
         },
@@ -181,31 +213,72 @@ app.home = kendo.observable({
                 homeModel.fields.username.trim()
             );
 
-            switch (homeModel.fields.username) {
-                case "Marcos":
-                case "Carlos":
-                case "Juan":
-                    // console.log(" username >>> OK " + homeModel.fields.username);
-                    loggedUser = homeModel.fields.username;
-                    switch (homeModel.fields.selectedRol) {
-                        case "Vendedor":
-                            console.log(" Rol >>> Vendedor ");
+            // 20160224 Add here code for validating tracker users against Everlive Back End Service START
+            var queryBS = new Everlive.Query();
+            queryBS.where().eq("Username", homeModel.fields.username);
+            // console.log("TrackersBS.get >>> START");
+            TrackersBS.get(queryBS).then(
+                function (data) {
+                    // alert(JSON.stringify(data));
+                    // console.log(JSON.stringify(data));
+                    if (data.count == 1) {
+                        // console.log("*** OK USUARIO REGISTRADO ***");
+                        // console.log("Username >>> "+data.result[0].Username);
+                        // console.log("Role >>> "+data.result[0].Role);
+                        loggedUser = homeModel.fields.username;
+                        if ((data.result[0].Role) == "V") {
+                            // ROL VENDEDOR
+                            // console.log("BS >>> Rol >>> Vendedor");
                             app.mobileApp.navigate('#components/home/inicioVendedor.html');
-                            break;
-                        case "Supervisor":
-                            console.log(" Rol >>> Supervisor ");
+                        }
+                        if ((data.result[0].Role) == "S") {
+                            // ROL SUPERVISOR
+                            // console.log("BS >>> Rol >>> Supervisor");
                             app.mobileApp.navigate('#components/home/inicioSupervisor.html');
-                            break;
-                        default:
-                            console.log(" Rol >>> **KO** no valido");
+                        }
                     }
-                    this.set("homeModel.fields.isVisible", false);
-                    break;
-                default:
-                    console.log(" username >>> **KO** " + homeModel.fields.username);
-                    this.set("homeModel.fields.isVisible", true);
-                    $("#UsrNoRegistrado").html("Usuario " + homeModel.fields.username + " no registrado");
-            }
+                    if (data.count == 0) {
+                        // console.log("** KO BS** USUARIO NO REGISTRADO >>> "+homeModel.fields.username);
+                        parent.set("homeModel.fields.isVisible", true);
+                        $("#UsrNoRegistrado").html("Estimado " + homeModel.fields.username + " no estas registrado");
+                        newUser = homeModel.fields.username;
+                    }
+                },
+                function (error) {
+                    // alert(JSON.stringify(error));
+                    console.log(JSON.stringify(error));
+                }
+            );
+            // THIS FRAGMENT OF CODE RUN ASINCROUSLY, ** BEFORE ** THS SUCCESS FUNCTION OF TrackersBS OBJECT
+            // console.log("TrackersBS.get >>> STOP");
+            queryBS = null;
+            // 20160224 Add here code for validating tracker users against Everlive Back End Service END
+
+            // switch (homeModel.fields.username) {
+            //     case "Marcos":
+            //     case "Carlos":
+            //     case "Juan":
+            //         // console.log(" username >>> OK " + homeModel.fields.username);
+            //         loggedUser = homeModel.fields.username;
+            //         switch (homeModel.fields.selectedRol) {
+            //             case "Vendedor":
+            //                 console.log(" Rol >>> Vendedor ");
+            //                 app.mobileApp.navigate('#components/home/inicioVendedor.html');
+            //                 break;
+            //             case "Supervisor":
+            //                 console.log(" Rol >>> Supervisor ");
+            //                 app.mobileApp.navigate('#components/home/inicioSupervisor.html');
+            //                 break;
+            //             default:
+            //                 console.log(" Rol >>> **KO** no valido");
+            //         }
+            //         this.set("homeModel.fields.isVisible", false);
+            //         break;
+            //     default:
+            //         console.log(" username >>> **KO** " + homeModel.fields.username);
+            //         this.set("homeModel.fields.isVisible", true);
+            //         $("#UsrNoRegistrado").html("Usuario " + homeModel.fields.username + " no registrado");
+            // }
         },
 
         limpiar: function () {
@@ -266,11 +339,54 @@ app.home = kendo.observable({
     });
     parent.set('viewPosVendedor', viewPosVendedor);
 
+    var registraUsuarioModel = kendo.observable({
+        fields: {
+            selectedRol: "Vendedor",
+            msgRegNuevoUsuario: "",
+        },
+        registraUsuario: function (e) {
+            app.mobileApp.navigate('#components/home/registraUsuario.html');
+        },
+        terminar: function (e) {
+            app.mobileApp.navigate('#components/home/view.html');
+            parent.set("homeModel.fields.isVisible", false);
+        },
+        creaNuevoUsuario: function (e) {
+            this.set("registraUsuarioModel.fields.msgRegNuevoUsuario", "Registrando nuevo usuario...");
+            var rolNuevoUsuario = "";
+            if (registraUsuarioModel.fields.selectedRol == "Supervisor") {
+                // console.log(" >>> CREAR NUEVO ** SUPERVISOR **");
+                rolNuevoUsuario = "S";
+            }
+            if (registraUsuarioModel.fields.selectedRol == "Vendedor") {
+                // console.log(" >>> CREAR NUEVO ** VENDEDOR **");
+                rolNuevoUsuario = "V";
+            }
+            // console.log("Nuevo USR >>> "+newUser);
+
+            TrackersBS.create({
+                    "Username": newUser,
+                    "Role": rolNuevoUsuario
+                },
+                function (data) {
+                    // console.log("Nuevo USR creato >>> "+JSON.stringify(data));                    
+                    parent.set("registraUsuarioModel.fields.msgRegNuevoUsuario", "REGISTRO NUEVO USUARIO OK!!");
+                },
+                function (error) {
+                    // console.log("Nuevo USR error >>> "+JSON.stringify(error));
+                    parent.set("registraUsuarioModel.fields.msgRegNuevoUsuario", "ERROR REGISTRANDO USUARIO KO!!!!");
+                }
+            );
+        },
+    });
+    parent.set('registraUsuarioModel', registraUsuarioModel);
+
 })(app.home);
 
 // START_CUSTOM_CODE_homeModel
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 var loggedUser = "";
+var newUser = "";
 
 var dsPosRecientesCarlos = new kendo.data.DataSource({
     data: [
@@ -304,7 +420,7 @@ var dsPosRecientesMarcos = new kendo.data.DataSource({
             name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>12:20:37</b>"
         },
         {
-            latlng: [-12.0915,-77.0209],
+            latlng: [-12.0915, -77.0209],
             name: "Pos:<b>4</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>"
         },
     ]
@@ -325,11 +441,11 @@ var dsPosRecientesJuan = new kendo.data.DataSource({
             name: "Pos:<b>3</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:27:00</b>"
         },
         {
-            latlng: [-12.0698,-77.0426],
+            latlng: [-12.0698, -77.0426],
             name: "Pos:<b>4</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>16:40:31</b>"
         },
         {
-            latlng: [-12.0833,-77.0542],
+            latlng: [-12.0833, -77.0542],
             name: "Pos:<b>5</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>17:20:07</b>"
         },
 
@@ -351,5 +467,10 @@ function msgWaitPosVendedor() {
 
     $("#mapPosVendedor").html(strHTML);
 }
+
+// 20160224 Objects Everlive Back End Service START
+var providerBS = app.data.valmarTracker;
+var TrackersBS = providerBS.data("Trackers");
+// 20160224 Objects Everlive Back End Service START
 
 // END_CUSTOM_CODE_homeModel

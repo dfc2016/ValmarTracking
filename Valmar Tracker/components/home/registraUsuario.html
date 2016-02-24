@@ -1,0 +1,37 @@
+<div data-role="view" data-model="app.home" data-show="app.home.onShowRegUsuario">
+    <div id="registraUsuarioModel">
+        <h2>
+            Estimado
+            <label id="nuevoUsuario"></label>
+        </h2>
+        <h4>
+            Para usar la app <b>Supervisor y Vendedores</b> tienes que registrarte primero
+            <br>Debes eligir un rol para tu usuario entre Vendedor y Supervisor
+        </h4>        
+        <div class="roles">
+            <label class="roles-label">
+                Seleccionar Rol >> 
+            </label>                   
+
+            <select data-bind="value: registraUsuarioModel.fields.selectedRol">
+                <option>
+                    Supervisor
+                </option>
+                <option>
+                    Vendedor
+                </option>
+            </select>
+        </div>
+        <div id="msgRegNuevoUsuario" data-bind="html: registraUsuarioModel.fields.msgRegNuevoUsuario"></div>
+        <div class="container-fluid">
+            <div class="btn-group-vertical btn-group-lg" style="width:100%;">
+                <button type="button" class="btn btn-sm btn-success" data-bind="events: { click: registraUsuarioModel.creaNuevoUsuario }">
+                    Registrar
+                </button>
+                <button type="button" class="btn btn-sm btn-info" style="margin-top:5px;" data-bind="events: { click: registraUsuarioModel.terminar }">
+                    Salir
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,24 +16,6 @@
                     <br><b>Por favor, activar siempre la funcion de GPS antes de empezar.</b>
                 </li>
                 <li>
-                    <div class="roles">
-                        
-                        <label class="roles-label">
-                            Seleccionar Rol >> 
-                        </label>                   
-
-                        <select data-bind="value: homeModel.fields.selectedRol">
-                            <option>
-                                Supervisor
-                            </option>
-                            <option>
-                                Vendedor
-                            </option>
-                        </select>
-                        
-                    </div>                    
-                </li>
-                <li>
                     <div class="input-nombre">
                         <label class="label-nombre">Nombre:</label>
                         <input data-bind="value: homeModel.fields.username" placeholder="Tu nombre" type="text">
@@ -43,6 +25,9 @@
             
             <div class="container-fluid"  style="margin-bottom:5px;" data-bind="visible: homeModel.fields.isVisible">
                 <div id="UsrNoRegistrado" style="color:blue;"></div>
+                <button type="button" class="btn btn-xs btn-warning" data-bind="events: { click: registraUsuarioModel.registraUsuario }">
+                    REGISTRARSE
+                </button>
             </div>
             
             <div class="container-fluid">
