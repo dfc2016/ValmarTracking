@@ -10,7 +10,7 @@ app.home = kendo.observable({
     },
     afterShowIniSuperVisor: function () {
         console.log(" afterShowIniSuperVisor >>> OK");
-        // 20160224 TEST Expand Expression Data BS
+        // 20160224 TEST Expand Expression Data BS START
         // var expandExp = {
         //     "Positions": {
         //         "Positions.Tracker": true
@@ -29,6 +29,7 @@ app.home = kendo.observable({
             function (data) {
                 console.log("Query BS Expanded SUCCES user >>> " + loggedUser);
                 // console.log(JSON.stringify(data));
+                // console.log("All positions for user >>> "+JSON.stringify(data.result[0].Locations));
                 console.log("Expanded data POS 1 >>> "+JSON.stringify(data.result[0].Locations[0].Pos));
                 console.log("Expanded data POS 2 >>> "+JSON.stringify(data.result[0].Locations[1].Pos));
             },
@@ -37,6 +38,26 @@ app.home = kendo.observable({
                 console.log(JSON.stringify(error));
             }
         );
+        queryBS = null;
+        expandExp = null;
+        // 20160224 TEST Expand Expression Data BS STOP
+        
+        // 20160225 TEST Expand Expression Data BS START
+        var query2BS = new Everlive.Query();
+        query2BS.where().eq("Username", loggedUser);
+        TrackersBS.get(query2BS).then(
+            function (data) {
+                console.log("Query 2 BS Expanded SUCCES user >>> " + loggedUser);
+                console.log(JSON.stringify(data));
+            },
+            function (error) {
+                console.log("Query 2 BS Expanded ERROR user >>> " + loggedUser);
+                console.log(JSON.stringify(error));
+            }
+        );
+        query2BS = null;
+        // 20160225 TEST Expand Expression Data BS STOP
+        
     },
     afterShowUltimasPosiciones: function () {
         console.log(" afterShowUltimasPosiciones >>> OK");
@@ -117,7 +138,19 @@ app.home = kendo.observable({
             strLabelPosVendedor = "<b>";
             strLabelPosVendedor = strLabelPosVendedor + loggedUser;
             strLabelPosVendedor = strLabelPosVendedor + "</b><br>Fecha:<b>03-02-2016</b><br>Hora:<b>15:20:07</b>";
-
+            
+            // position.coords.latitude.toPrecision(10)
+            // position.coords.longitude.toPrecision(10)
+            //20160225 Insert here a function to store a new Geolocation pos for logged user with VENDEDOR role START
+            var strNotaPosicion = "Nueva posicion en el mapa";
+            nuevaPosVendedor(
+                position.coords.latitude.toPrecision(6),
+                position.coords.longitude.toPrecision(6),
+                idLoggedUserBS,
+                strNotaPosicion
+            );
+            //20160225 Insert here a function to store a new Geolocation pos for logged user with VENDEDOR role STOP
+            
             var dsPosVendedor = new kendo.data.DataSource({
                 data: [
                     {
@@ -225,7 +258,9 @@ app.home = kendo.observable({
                         // console.log("*** OK USUARIO REGISTRADO ***");
                         // console.log("Username >>> "+data.result[0].Username);
                         // console.log("Role >>> "+data.result[0].Role);
+                        // console.log("Id Logged User >>> "+data.result[0].Id);
                         loggedUser = homeModel.fields.username;
+                        idLoggedUserBS = data.result[0].Id;
                         if ((data.result[0].Role) == "V") {
                             // ROL VENDEDOR
                             // console.log("BS >>> Rol >>> Vendedor");
@@ -471,6 +506,39 @@ function msgWaitPosVendedor() {
 // 20160224 Objects Everlive Back End Service START
 var providerBS = app.data.valmarTracker;
 var TrackersBS = providerBS.data("Trackers");
+var PositionsBS = providerBS.data("Positions");
+var idLoggedUserBS = "";
 // 20160224 Objects Everlive Back End Service START
+
+//20160225 Function to store a new Geolocation pos for logged user with VENDEDOR role START
+function nuevaPosVendedor(latitude,longitude,idBSVendedor,notaPosicion){
+    console.log(">>> *** nuevaPosVendedor ***");
+    console.log("nuevaPosVendedor >>> LAT: "+latitude+" LNG: "+longitude);
+    console.log("nuevaPosVendedor >>> idBSVendedor: "+idBSVendedor);
+    console.log("nuevaPosVendedor >>> notaPosicion: "+notaPosicion);
+	// Example of  Everlive GeoPoint obj
+	// *** THE ORDER IS IMPOTANT 1ST longitude, 2ND latitude ***
+    // Location = new Everlive.GeoPoint(30 /* longitude */, 50 /* latitude */);
+    var posVendedor = new Everlive.GeoPoint(longitude,latitude);
+    // Find last Position Count for idBSVendedor user
+    var queryBS = new Everlive.Query();
+    queryBS.where().eq("Id", idBSVendedor);
+    TrackersBS.get(queryBS).then(
+        function (data) {
+            console.log("Query nuevaPosVendedor SUCCES >>> idBSVendedor");
+            console.log(JSON.stringify(data));
+            console.log("Total Pos >>> "+data.result[0].TotalPos);
+        },
+        function (error) {
+            console.log("Query nuevaPosVendedor ERROR >>> idBSVendedor ");
+            console.log(JSON.stringify(error));
+        }
+    );
+    queryBS = null;
+    // 20160225 to be continued...
+
+
+}
+//20160225 Function to store a new Geolocation pos for logged user with VENDEDOR role STOP
 
 // END_CUSTOM_CODE_homeModel
